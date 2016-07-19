@@ -17,8 +17,9 @@ document.addEventListener("DOMNodeInserted", function() {
 			var regexes = items["iDunLikeREs"];
 			for (var r = 0; r < regexes.length; r++) {
 		 		var e = $("div._401d:regex(\'" + regexes[r] + "\')");
-				var e = $("div._4-u2:regex(\'" + regexes[r] + "\')");
+				var h = $("div._4-u2:regex(\'" + regexes[r] + "\')");
 				removeElements(e);
+				removeElements(h);
 			}
 	});
 });
