@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
     <title>iDunLike Options</title>
   </head>
   <body>
-    <p>Type in what you don't want to see posts of:</p>
-    <div>
-      <input id="regex" type="text" style="display: inline-block;">
-      <input id="submit" type="submit" style="display: inline-block;">
-			<input id="save" type="submit" style="display: inline-block;" value="Save">
-    </div>
-    <div id="sofar">
-			<p>Here's what you have so far:
-			<ul id="list">
+		<div id="wrapper">
+			<div id="save-changes">
+				<input id="save-like" type="submit" style="display: inline-block;" value="Save">
+			</div>
+			<div id="no-likey">
+			  <p>Type in what you don't want to see posts of:</p>
+			  <div>
+			    <input id="regex-no-likey" type="text" style="display: inline-block;">
+			    <input id="submit-no-likey" type="submit" style="display: inline-block;">
+			  </div>
+			  <div id="sofar">
+					<p>Here's what you have so far:
+					<ul id="list">
 
-			</ul>
+					</ul>
+				</div>
+			</div>
+			<div id="likey">
+			  <p>Type in what you do want to see posts of:</p>
+			  <div>
+			    <input id="regex-likey" type="text" style="display: inline-block;">
+			    <input id="submit-likey" type="submit" style="display: inline-block;">
+			  </div>
+			  <div id="sofar-likey">
+					<p>Here's what you have so far:
+					<ul id="list-likey">
+
+					</ul>
+				</div>
+			</div>
 		</div>
 		<script src="js/jquery-2.1.4.js"></script>
 		<script src="js/options.js"></script>
