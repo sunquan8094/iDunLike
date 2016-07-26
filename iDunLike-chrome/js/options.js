@@ -1,3 +1,15 @@
+// Code modified from answer at http://stackoverflow.com/questions/17250815/how-to-check-if-the-input-string-is-a-valid-regular-expression
+function validateRegex(str) {
+	var r = true;
+	try {
+		new RegExp(str);
+	}
+	catch (e) {
+		r = false;
+	}
+	return r;
+}
+
 // begin no-likey
 function addToList(str) {
 	var l = document.createElement("li"), rmv = document.createElement("button"), edt = document.createElement("button");
@@ -13,10 +25,16 @@ function addToList(str) {
 }
 
 function addRegex() {
-	if (document.getElementById("regex-no-likey").value !== "") {
-		addToList(document.getElementById("regex-no-likey").value);
+	var r = document.getElementById("regex-no-likey").value;
+	if (r !== "") {
+		if (validateRegex(r)) {
+			addToList(r);
+			document.getElementById("regex-no-likey").value = "";
+		}
+		else {
+			window.alert("Invalid regex!");
+		}
 	}
-	document.getElementById("regex-no-likey").value = "";
 }
 
 function editElement(e) {
@@ -40,10 +58,16 @@ function addToListLikey(str) {
 }
 
 function addRegexLikey() {
-	if (document.getElementById("regex-likey").value !== "") {
-		addToListLikey(document.getElementById("regex-likey").value);
+	var r = document.getElementById("regex-likey").value;
+	if (r !== "") {
+		if (validateRegex(r)) {
+			addToList(r);
+			document.getElementById("regex-likey").value = "";
+		}
+		else {
+			window.alert("Invalid regex!");
+		}
 	}
-	document.getElementById("regex-likey").value = "";
 }
 
 function editElementLikey(e) {
