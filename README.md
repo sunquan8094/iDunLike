@@ -1,5 +1,5 @@
 # iDunLike
-Make your news feed great again with iDunLike, a homemade Chrome and Firefo extension which filters posts wherever you are on Facebook according to your tastes.
+Make your news feed great again with iDunLike, a homemade Chrome and Firefox extension which filters posts wherever you are on Facebook according to your tastes.
 
 ## Features
 Here is a list of the current features:
