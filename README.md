@@ -18,7 +18,7 @@ Here is a list of the current features:
     - Yay, you're at the Extensions panel! Enable developer mode by checking the checkbox. If you already have it checked, good for you.
   	- Click on "Load unpacked extension", select the folder your cloned repository is stored under, and click "Open".
 * Firefox Instructions
-    - You're going to have to run this extension in Firefox Developer Edition. If you have it, just run `web-ext run --firefox-binary=/Applications/FirefoxDeveloperEdition.app/` on OS X or `web-ext run --firefox-binary="C:\Program Files\Mozilla Firefox\firefox.exe"` on Windows. If not, you can to install it. Search for it using your favorite search engine.
+    - You're going to have to run this extension in Firefox Developer Edition using the `web-ext` tool. Instructions for installing the `web-ext` tool can be found [here](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Getting_started_with_web-ext). Run `web-ext run --firefox-binary=/Applications/FirefoxDeveloperEdition.app/` on OS X or `web-ext run --firefox-binary="C:\Program Files\Mozilla Firefox\firefox.exe"` on Windows. If not, you can to install it. Search for it using your favorite search engine.
 
 ## Usage
 Click on Options for this plugin in the Extensions panel. \(You should know how to get there by now.\) Choose some keywords of topics that make you cringe or smile with delight. For those keywords that make you cringe, enter them on the left side. For those keywords that make you smile with delight, enter on the right side. Don't forget to save!
