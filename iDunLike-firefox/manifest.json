@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "iDunLike",
+  "description": "This extension removes whatever posts you want from your Facebook news feed.",
+  "version": "0.1",
+	"applications": {
+		"gecko": {
+			"id": "sunquan8094@gmail.com"
+		}
+	},
+  "options_ui": { "page": "options.html" } ,
+  "permissions": ["storage"],
+  "web_accessible_resources": ["script.js"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["js/jquery-2.1.4.js", "js/filter.js"],
+      "run_at": "document_idle",
+			"all_frames": false
+    }
+  ],
+	"icons": {
+		"32": "icon32.png",
+		"48": "icon48.png"
+	}
+}

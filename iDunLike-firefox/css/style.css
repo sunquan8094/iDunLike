@@ -1,0 +1,13 @@
+#wrapper {
+
+}
+
+#likey {
+	float: right;
+	width: 50%;
+}
+
+#no-likey {
+	float: left;
+	width: 50%;
+}
