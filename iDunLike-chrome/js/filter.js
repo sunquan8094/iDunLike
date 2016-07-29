@@ -1,3 +1,5 @@
+var selectors = ["div._4ikz", "div._3u1._gli._1c30", "div._4-u2.mbm._5v3q._4-u8", "div._401d", "div._4qjp", "li._5my2._3uz4"];
+
 // Code for jQuery extension taken from https://blog.mastykarz.nl/jquery-regex-filter/
 jQuery.extend(
     jQuery.expr[':'], {
@@ -5,49 +7,40 @@ jQuery.extend(
             var r = new RegExp(m[3], 'i');
             return r.test(jQuery(a).text());
         }
-    }
+		}
 );
-
-function removeElements(e) {
-	e.fadeOut("fast");
-}
 
 function elementsToTop(e, before) {
 	e.insertBefore(before);
 }
 
-document.addEventListener("DOMNodeInserted", function() {
-	var res = chrome.storage.sync.get({"iDunLikeREs": [], "iDunLikeREsLikey": []}, function (items) {
-			var _regexes = items["iDunLikeREs"];
+function magicalFilter(e) {
+	var res = chrome.storage.sync.get({"iDunLikeREs": [], "iDunLikeREsLikey": [], "iDunLikePri": false}, function (items) {
+		var _regexes = items["iDunLikeREs"], _regexes_likey = items["iDunLikeREsLikey"];
+		for (var b = 0; b < selectors.length; b++) {
 			for (var r = 0; r < _regexes.length; r++) {
-		 		var e = $("div._4ikz:regex(\'" + _regexes[r] + "\')"); // Posts
-				var h = $("div._3u1._gli._1c30:regex(\'" + _regexes[r] + "\')"); // Results Page Pages
-				var u = $("div._4-u2.mbm:regex(\'" + _regexes[r] + "\')");
-				var f = $("div._401d:regex(\'" + _regexes[r] + "\')");
-				var n = $("div._4qjp:regex(\'" + _regexes[r] + "\')");
-				var t = $("li._5my2:regex(\'" + _regexes[r] + "\')"); // Trending
-				removeElements(e);
-				removeElements(h);
-				removeElements(u);
-				removeElements(f);
-				removeElements(n);
-				removeElements(t);
+				if ($(document).find(selectors[b] + ":regex(\'" + _regexes[r] + "\')").length > 0) {
+					$(document).find(selectors[b] + ":regex(\'" + _regexes[r] + "\')").fadeOut('fast');
+				}
 			}
 
-			var _regexes_likey = items["iDunLikeREsLikey"];
-    	for (var r = 0; r < _regexes_likey.length; r++) {
-				var e = $("div._4ikz:regex(\'" + _regexes_likey[r] + "\')"); // Posts
-				var h = $("div._3u1._gli._1c30:regex(\'" + _regexes_likey[r] + "\')"); // Results Page Pages
-				var u = $("div._4-u2.mbm:regex(\'" + _regexes_likey[r] + "\')"); // Feed Posts
-				var f = $("div._401d:regex(\'" + _regexes_likey[r] + "\')");
-				var n = $("div._4qjp:regex(\'" + _regexes_likey[r] + "\')");
-				var t = $("li._5my2:regex(\'" + _regexes_likey[r] + "\')"); // Trending
+			if (!items["iDunLikePri"]) {
+	    	for (var r = 0; r < _regexes_likey.length; r++) {
+					if ($(document).find(selectors[b] + ":regex(\'" + _regexes_likey[r] + "\')").length > 0) {
+						elementsToTop($(document).find(selectors[b] + ":regex(\'" + _regexes_likey[r] + "\')"), $(selectors[b] + ':first'));
+					}
+				}
 			}
-			elementsToTop(e, 'div._4ikz:first');
-			elementsToTop(h, 'div._3u1._gli._1c30:first');
-			elementsToTop(u, 'div._4-u2.mbm:first');
-			elementsToTop(f, 'div._401d:first');
-			elementsToTop(n, 'div._4qjp:first');
-			elementsToTop(t, 'li._5my2:first');
+			else {
+				for (var r = _regexes_likey.length - 1; r >= 0; r--) {
+					if ($(document).find(selectors[b] + ':regex(\'' + _regexes_likey[r] + '\')').length > 0) {
+						elementsToTop($(document).find(selectors[b] + ':regex(\'' + _regexes_likey[r] + '\')'),
+																					 r < _regexes_likey.length - 1 ? $(selectors[b] + ':regex(\'' + _regexes_likey[r + 1] + '\'):first') : $(selectors[b] + ':first'));
+					}
+				}
+			}
+		}
 	});
-});
+}
+
+document.addEventListener("DOMNodeInserted", magicalFilter);

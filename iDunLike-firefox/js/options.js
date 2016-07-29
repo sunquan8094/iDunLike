@@ -4,10 +4,43 @@ function validateRegex(str) {
 	try {
 		new RegExp(str);
 	}
-	catch(e) {
+	catch (e) {
 		r = false;
 	}
 	return r;
+}
+
+function sortListLikey() {
+ 	var eh = $('#list-likey').children('li').get().sort(function(a, b) {
+		return $(a).text().localeCompare($(b).text());
+	});
+	$('#list-likey').empty();
+	$('#list-likey').append(eh);
+}
+
+function sortListNoLikey() {
+ 	var eh = $('#list').children('li').get().sort(function(a, b) {
+		return $(a).text().localeCompare($(b).text());
+	});
+	$('#list').empty();
+	$('#list').append(eh);
+}
+
+// Code for toggle functions taken from http://stackoverflow.com/questions/918792/use-jquery-to-change-an-html-tag
+function priToNon() {
+	$('#list-likey').replaceWith($('<ul id="list-likey">' + $('#list-likey').html() + '</ul>'));
+}
+
+function nonToPri() {
+	$('#list-likey').replaceWith($('<ol id="list-likey">' + $('#list-likey').html() + '</ol>'));
+}
+
+function togglePriNon() {
+	if ($('#prioritize').is(':checked')) {
+		nonToPri();
+	}
+	else priToNon();
+	$('.up-down').toggleClass('invisible');
 }
 
 // begin no-likey
@@ -24,15 +57,23 @@ function addToList(str) {
 	document.getElementById("list").appendChild(l);
 }
 
+function indexOfRegexExists(str) {
+	var nodes = document.getElementsByClassName("regexp-no-likey");
+	nodes = [].slice.call(nodes).map(function (v) {return v.innerText.substring(0, v.innerText.indexOf("EditRemove"))});
+	console.log(nodes);
+	if (nodes.length == 0) return false;
+	return nodes.indexOf(str) > -1;
+}
+
 function addRegex() {
 	var r = document.getElementById("regex-no-likey").value;
 	if (r !== "") {
-		if (validateRegex(r)) {
+		if (validateRegex(r) && !indexOfRegexExists(r)) {
 			addToList(r);
 			document.getElementById("regex-no-likey").value = "";
 		}
 		else {
-			window.alert("Invalid regex!");
+			window.alert("Can't use it!");
 		}
 	}
 }
@@ -45,27 +86,48 @@ function editElement(e) {
 
 // begin likey
 function addToListLikey(str) {
-	var l = document.createElement("li"), rmv = document.createElement("button"), edt = document.createElement("button");
+	var l = document.createElement("li"),
+			rmv = document.createElement("button"),
+			edt = document.createElement("button"),
+			l_up = document.createElement("button"),
+			l_dn = document.createElement("button");
 	rmv.innerHTML = "Remove";
 	edt.innerHTML = "Edit";
-	rmv.setAttribute("class","rmv-likey");
-  edt.setAttribute("class","edt-likey");
+	l_up.innerHTML = "&#x25B2;";
+	l_dn.innerHTML = "&#x25BC;";
+	rmv.setAttribute("class", "rmv-likey");
+  edt.setAttribute("class", "edt-likey");
+	l_up.setAttribute("class", "up up-down");
+	l_dn.setAttribute("class", "down up-down");
+	if (!$('#prioritize').is(":checked")) {
+			l_up.setAttribute("class", l_up.getAttribute("class") + " invisible");
+			l_dn.setAttribute("class", l_dn.getAttribute("class") + " invisible");
+	}
 	l.appendChild(document.createTextNode(str));
 	l.appendChild(edt);
 	l.appendChild(rmv);
+	l.appendChild(l_up);
+	l.appendChild(l_dn);
 	l.setAttribute("class", "regexp-likey");
 	document.getElementById("list-likey").appendChild(l);
+}
+
+function indexOfRegexExistsLikey(str) {
+	var nodes = document.getElementsByClassName("regexp-likey");
+	nodes = [].slice.call(nodes).map(function (v) {return v.innerText.substring(0, v.innerText.indexOf("EditRemove"))});
+	if (nodes.length == 0) return false;
+	return nodes.indexOf(str) > -1;
 }
 
 function addRegexLikey() {
 	var r = document.getElementById("regex-likey").value;
 	if (r !== "") {
-		if (validateRegex(r)) {
-			addToList(r);
+		if (validateRegex(r) && !indexOfRegexExistsLikey(r)) {
+			addToListLikey(r);
 			document.getElementById("regex-likey").value = "";
 		}
 		else {
-			window.alert("Invalid regex!");
+			window.alert("Can't use it!");
 		}
 	}
 }
@@ -90,12 +152,12 @@ function saveOptions() {
 		regexes_likey.push(regexps_likey[p].innerHTML.substring(0, regexps_likey[p].innerHTML.indexOf("<")));
 	}
 	if (!commonValue(regexes, regexes_likey)) {
-		chrome.storage.local.set({ "iDunLikeREs": regexes, "iDunLikeREsLikey": regexes_likey}, function(items) {
+		chrome.storage.local.set({ "iDunLikeREs": regexes, "iDunLikeREsLikey": regexes_likey, "iDunLikePri": $('#prioritize').is(':checked')}, function(items) {
 			window.alert("Options saved!");
 		});
 	}
   else {
-		window.alert("Same value in both lists detected!");
+		window.alert("Duplicate value detected in both lists detected!");
 	}
 }
 
@@ -112,20 +174,39 @@ function commonValue(arr1, arr2) {
 }
 
 function getOptions() {
-	chrome.storage.local.get({"iDunLikeREs": [], "iDunLikeREsLikey": []} , function(items) {
+	chrome.storage.local.get({"iDunLikeREs": [], "iDunLikeREsLikey": [], "iDunLikePri": false} , function(items) {
+		$('#prioritize').prop('checked', items["iDunLikePri"]);
+
 		if (items["iDunLikeREs"].length !== 0) {
-			items["iDunLikeREs"].sort();
 			for (var i = 0; i < items["iDunLikeREs"].length; i++) {
 				addToList(items["iDunLikeREs"][i]);
 			}
 		}
     if (items["iDunLikeREsLikey"].length !== 0) {
-			items["iDunLikeREsLikey"].sort();
 			for (var i = 0; i < items["iDunLikeREsLikey"].length; i++) {
 				addToListLikey(items["iDunLikeREsLikey"][i]);
 			}
 		}
+		if (items["iDunLikePri"]) {
+			nonToPri();
+		}
 	});
+}
+
+function swapLis(li1, li2) {
+	li1.parentNode.insertBefore(li1, li2);
+}
+
+function upLis(e) {
+	if (e.target.parentNode !== e.target.parentNode.parentNode.firstChild) {
+		swapLis(e.target.parentNode, e.target.parentNode.previousSibling);
+	}
+}
+
+function dnLis(e) {
+	if (e.target.parentNode !== e.target.parentNode.parentNode.lastChild) {
+		swapLis(e.target.parentNode.nextSibling,e.target.parentNode);
+	}
 }
 
 function addButtonFunctions() {
@@ -140,8 +221,15 @@ function addButtonFunctions() {
 
   for (var d = 0; d < document.querySelectorAll('.rmv-likey').length; d++)
   	document.querySelectorAll('.rmv-likey')[d].addEventListener('click', removeElement);
-}
 
+	for (var d = 0; d < document.querySelectorAll('.up').length; d++) {
+		document.querySelectorAll('.up')[d].addEventListener('click', upLis);
+	}
+
+	for (var d = 0; d < document.querySelectorAll('.down').length; d++) {
+		document.querySelectorAll('.down')[d].addEventListener('click', dnLis);
+	}
+}
 
 document.addEventListener("DOMContentLoaded", function() {
 	if(document.querySelectorAll('button') !== null) {
@@ -158,11 +246,27 @@ document.getElementById("regex-no-likey").addEventListener('keypress', function(
 		addRegex();
 	}
 });
+document.getElementById("clear-list-no-likey").addEventListener('click', function() {
+	document.getElementById("list").innerHTML = "";
+});
+document.getElementById("clear-input-no-likey").addEventListener('click', function(e) {
+	document.getElementById("regex-no-likey").value = "";
+});
+
 document.getElementById("submit-likey").addEventListener('click', addRegexLikey);
 document.getElementById("regex-likey").addEventListener('keypress', function(e) {
 	if (e.keyCode == 13) {
 		addRegexLikey();
 	}
 });
+document.getElementById("clear-list-likey").addEventListener('click', function() {
+	document.getElementById("list-likey").innerHTML = "";
+});
+document.getElementById("clear-input-likey").addEventListener('click', function(e) {
+	document.getElementById("regex-likey").value = "";
+});
 
 document.getElementById("save-changes").addEventListener('click', saveOptions);
+document.getElementById("prioritize").addEventListener('click', togglePriNon);
+document.getElementById("sort-no-likey").addEventListener('click', sortListNoLikey);
+document.getElementById("sort-likey").addEventListener('click', sortListLikey);

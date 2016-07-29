@@ -11,3 +11,7 @@
 	float: left;
 	width: 50%;
 }
+
+.invisible {
+	display: none;
+}

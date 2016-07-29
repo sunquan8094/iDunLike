@@ -5,10 +5,10 @@ Make your news feed great again with iDunLike, a homemade Chrome and Firefox ext
 Here is a list of the current features:
 * filtering of unwanted posts using regular expressions
 * prioritizing of desired posts using regular expressions
+* optional desired regex hierarchy
 
 ## In the Works
 * package system \(ideas for default packages welcome\)
-* optional desired regex hierarchy
 
 ## Installation
 1. Clone this repository in your terminal. I assume you know how to clone a GitHub repository by now.
