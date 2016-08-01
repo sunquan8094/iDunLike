@@ -157,20 +157,20 @@ function parens(str1, str2) {
 
 
 		if ((arr1[0] === undefined || arr1[0] === "") && arr2[0] !== "") {
-			ret += "(" + arr2[0] + ")"
+			ret += "(" + arr2[0] + "){0,1}"
 		}
 		else if ((arr2[0] === undefined || arr2[0] === "") && arr1[0] !== "") {
-			ret += "(" + arr1[0] + ")"
+			ret += "(" + arr1[0] + "){0,1}"
 		}
 		else if (arr1[0] !== "" && arr2[0] !== "") ret +=  "(" + arr1[0] + "|" + arr2[0] + ")";
 
 		ret += daLcs;
 
 		if ((arr1[1] === undefined || arr1[1] === "") && arr2[1] !== "") {
-			ret += "(" + arr2[1] + ")"
+			ret += "(" + arr2[1] + "){0,1}"
 		}
 		else if ((arr2[1] === undefined || arr2[1] === "") && arr1[1] !== "") {
-			ret += "(" + arr1[1] + ")"
+			ret += "(" + arr1[1] + "){0,1}"
 		}
 		else if (arr1[1] !== "" && arr2[1] !== "") ret +=  "(" + arr1[1] + "|" + arr2[1] + ")";
 		return ret;
