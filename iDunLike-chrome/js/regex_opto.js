@@ -22,19 +22,32 @@ function compactStr(str1) {
 
 function regex_opto_brackets(contents) {
 	var not = contents.indexOf('^') === 0;
+	var dashes = contents.match(/[^\[]\-[^\]]/g).slice(0);
+	console.log(dashes);
 	var dirtyStr = contents.replace(/^\^/, "").replace(/[\[\]]/g,"");
 	dirtyStr = dirtyStr.split("");
 	dirtyStr.sort();
-	dirtyStr = dirtyStr.join("");
-	var pureStr = compactStr(dirtyStr);
+	dirtyStr = dirtyStr.join("").replace(/\-/g, "");
+	dirtyStr = compactStr(dirtyStr);
+	console.log(dirtyStr);
+	if (dashes !== null) {
+		for (var d = 0; d < dashes.length; d++) {
+			dirtyStr = dirtyStr.replace(new RegExp(dashes[d].substring(0, 1) + ".*" + dashes[d].substring(2,3)), dashes[d]);
+		}
+	}
+	console.log(dirtyStr);
+	var pureStr = dirtyStr;
 	var ret = "";
 	var jumps = new Array(pureStr.length - 1);
 	for (var p = 1; p < pureStr.length; p++) {
-		jumps[p - 1] = pureStr.charCodeAt(p) - pureStr.charCodeAt(p - 1);
+		if (pureStr.charAt(p) == '-' || pureStr.charAt(p - 1) == '-')
+			jumps[p - 1] = -1;
+		else
+			jumps[p - 1] = pureStr.charCodeAt(p) - pureStr.charCodeAt(p - 1);
 	}
 	var ranges = [], r = 0, r_i = null; r_j = null;
 	for (var j = 0; j < jumps.length; j++) {
-		if (jumps[j] === 1) {
+		if (Math.abs(jumps[j]) === 1) {
 			if (r_i === null) r_i = j;
 		}
 		else if (jumps[j] > 1) {
@@ -69,6 +82,7 @@ function regex_opto_brackets(contents) {
 		}
 	}
 	else ret = pureStr;
+	console.log(ret);
 	ret = ret.replace(/[\[\]]/g,"");
 	return not ? "^" + ret : ret;
 }
@@ -123,8 +137,8 @@ function lcs(str1, str2) {
 		}
 	}
 	seq = seq.replace(/[\[\]\(\)\ ]/g, "");
-	return str1.match(new RegExp("\\(.*" + seq + ".*\\)")) !== null ||
-				 str2.match(new RegExp("\\(.*" + seq + ".*\\)")) !== null ? "" : seq;
+	return (str1.match(new RegExp("\\(.*" + seq + ".*\\)")) !== null ||
+				 str2.match(new RegExp("\\(.*" + seq + ".*\\)")) !== null) || seq.length == 1 ? "" : seq;
 }
 
 function magicalSplit(str, del) {
@@ -138,8 +152,8 @@ function parens(str1, str2) {
 	if (lcs(str1, str2) !== "") {
 		var daLcs = lcs(str1,str2), ret = "";
 		var arr1 = magicalSplit(str1, daLcs), arr2 = magicalSplit(str2, daLcs);
-		arr1.map(function(v) { v.replace(/[\(\)]/g,""); });
-		arr2.map(function(v) { v.replace(/[\(\)]/g,""); });
+		arr1.map(function(v) { v = v.replace(/[\(\)]/g,""); });
+		arr2.map(function(v) { v = v.replace(/[\(\)]/g,""); });
 
 
 		if ((arr1[0] === undefined || arr1[0] === "") && arr2[0] !== "") {
@@ -165,7 +179,16 @@ function parens(str1, str2) {
 }
 
 function regex_opto_2(str1, str2) {
-	var ret = parens(str1.replace(/^\(|\)$/g,""), str2.replace(/^\(|\)$/g,""));
+	var ret;
+	var dummy;
+	var daLcs = lcs(str1, str2);
+	if (str1.startsWith(daLcs) && str2.startsWith(daLcs)) {
+		ret = daLcs + "[" + regex_opto_brackets_2(str1.replace(daLcs, ""), str2.replace(daLcs, "")) + "]";
+	}
+	else if (str1.endsWith(daLcs) && str2.endsWith(daLcs)) {
+		ret = "[" + regex_opto_brackets_2(str1.replace(daLcs, "").replace(/[\[\]]/g, ""), str2.replace(daLcs, "").replace(/[\[\]]/g, "")) + "]" + daLcs;
+	}
+	else ret = parens(str1.replace(/^\(|\)$/g,""), str2.replace(/^\(|\)$/g,""));
 	return ret;
 }
 
