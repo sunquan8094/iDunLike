@@ -6,6 +6,7 @@ Here is a list of the current features:
 * filtering of unwanted posts using regular expressions
 * prioritizing of desired posts using regular expressions
 * optional desired regex hierarchy
+* regex optimizer (it is a rather quick and dirty one)
 
 ## In the Works
 * package system \(ideas for default packages welcome\)
