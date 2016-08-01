@@ -1,10 +1,10 @@
 var selectors = ["div._4ikz", "div._3u1._gli._1c30", "div._4-u2.mbm._5v3q._4-u8", "div._401d", "div._4qjp", "li._5my2._3uz4"];
 
-// Code for jQuery extension taken from https://blog.mastykarz.nl/jquery-regex-filter/
+// Code for jQuery extension modified from https://blog.mastykarz.nl/jquery-regex-filter/
 jQuery.extend(
     jQuery.expr[':'], {
         regex: function(a, i, m, r) {
-            var r = new RegExp(m[3], 'i');
+            var r = new RegExp(m[3]);
             return r.test(jQuery(a).text());
         }
 		}

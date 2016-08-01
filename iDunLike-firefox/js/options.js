@@ -60,7 +60,6 @@ function addToList(str) {
 function indexOfRegexExists(str) {
 	var nodes = document.getElementsByClassName("regexp-no-likey");
 	nodes = [].slice.call(nodes).map(function (v) {return v.innerText.substring(0, v.innerText.indexOf("EditRemove"))});
-	console.log(nodes);
 	if (nodes.length == 0) return false;
 	return nodes.indexOf(str) > -1;
 }
@@ -209,6 +208,26 @@ function dnLis(e) {
 	}
 }
 
+function optoLikey() {
+	var nodes = document.getElementsByClassName("regexp-likey");
+	nodes = [].slice.call(nodes).map(function (v) {return v.innerText.substring(0, v.innerText.indexOf("EditRemove"))});
+	document.getElementById("list-likey").innerHTML = "";
+	var eh = regex_opto(nodes);
+	for (var e = 0; e < eh.length; e++) {
+		addToListLikey(eh[e]);
+	}
+}
+
+function optoNoLikey() {
+	var nodes = document.getElementsByClassName("regexp-no-likey");
+	nodes = [].slice.call(nodes).map(function (v) {return v.innerText.substring(0, v.innerText.indexOf("EditRemove"))});
+	document.getElementById("list").innerHTML = "";
+	var eh = regex_opto(nodes);
+	for (var e = 0; e < eh.length; e++) {
+		addToList(eh[e]);
+	}
+}
+
 function addButtonFunctions() {
 	for (var d = 0; d < document.querySelectorAll('.edt-no-likey').length; d++)
 		document.querySelectorAll('.edt-no-likey')[d].addEventListener('click', editElement);
@@ -270,3 +289,5 @@ document.getElementById("save-changes").addEventListener('click', saveOptions);
 document.getElementById("prioritize").addEventListener('click', togglePriNon);
 document.getElementById("sort-no-likey").addEventListener('click', sortListNoLikey);
 document.getElementById("sort-likey").addEventListener('click', sortListLikey);
+document.getElementById("opto-no-likey").addEventListener('click', optoNoLikey);
+document.getElementById("opto-likey").addEventListener('click', optoLikey);

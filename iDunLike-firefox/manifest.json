@@ -10,7 +10,6 @@
 	},
   "options_ui": { "page": "options.html" } ,
   "permissions": ["storage"],
-  "web_accessible_resources": ["script.js"],
   "content_scripts": [
     {
       "matches": ["https://www.facebook.com/*"],
