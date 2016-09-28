@@ -15,3 +15,7 @@
 .invisible {
 	display: none;
 }
+
+.tag-input {
+	border: 1px;
+}

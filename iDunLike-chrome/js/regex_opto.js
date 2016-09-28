@@ -22,7 +22,7 @@ function compactStr(str1) {
 
 function regex_opto_brackets(contents) {
 	var not = contents.indexOf('^') === 0;
-	var dashes = contents.match(/[^\[]\-[^\]]/g).slice(0);
+	var dashes = contents.match(/[^\[]\-[^\]]/g) ? contents.match(/[^\[]\-[^\]]/g).slice(0) : null;
 	console.log(dashes);
 	var dirtyStr = contents.replace(/^\^/, "").replace(/[\[\]]/g,"");
 	dirtyStr = dirtyStr.split("");
@@ -88,6 +88,7 @@ function regex_opto_brackets(contents) {
 }
 
 function regex_opto_brackets_2(con1, con2) {
+  console.log(con1 + ", " + con2);
 	if (!con1.startsWith("^") && !con2.startsWith("^")) {
 		return regex_opto_brackets(con1+con2);
 	}
