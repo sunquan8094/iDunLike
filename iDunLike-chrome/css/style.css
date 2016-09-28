@@ -1,5 +1,5 @@
 #wrapper {
-
+  padding: 5px 10px;
 }
 
 #likey {
@@ -12,10 +12,56 @@
 	width: 50%;
 }
 
+p {
+  font-size: 14px;
+}
+
 .invisible {
 	display: none;
 }
 
 .tag-input {
 	border: 1px;
+}
+
+.regexp-no-likey {
+	margin: 2px;
+	list-style: none;
+  border: thin black solid;
+  border-radius: 2px;
+  width: auto;
+  display: inline-block;
+	padding: 2px;
+  background-color: pink;
+  font-size: 14px;
+}
+
+.regexp-likey {
+  margin: 2px;
+	border: thin black solid;
+  border-radius: 2px;
+  max-width: 75%;
+  display: block;
+	padding: 2px;
+  background-color: pink;
+  font-size: 14px;
+}
+
+.regexp-no-likey:hover, .regexp-likey:hover {
+	background-color: grey;
+}
+
+input[type="button"], input[type="submit"], button {
+  background-color: yellow;
+  font-size: 14px;
+}
+
+input[type="button"]:hover, input[type="submit"]:hover, button:hover {
+  background-color: red;
+}
+
+input[type="text"] {
+  font-size: 14px;
+	border-color: black;
+	background-color: tan;
 }
