@@ -53,32 +53,14 @@ function editElementU(likey, e) {
 }
 
 function addToListU(likey, str) {
-	var l = document.createElement("li"),
-			rmv = document.createElement("button"),
-			edt = document.createElement("button"),
-			l_up = document.createElement("button"),
-			l_dn = document.createElement("button");
-	rmv.innerHTML = "Remove";
-	edt.innerHTML = "Edit";
-	l_up.innerHTML = "&#x25B2;";
-	l_dn.innerHTML = "&#x25BC;";
-	rmv.setAttribute("class", likey ? "rmv-likey" : "rmv-no-likey");
-  edt.setAttribute("class", likey ? "edt-likey" : "edt-no-likey");
-	l_up.setAttribute("class", "up up-down");
-	l_dn.setAttribute("class", "down up-down");
-	if (!$('#prioritize').is(":checked")) {
-			l_up.setAttribute("class", l_up.getAttribute("class") + " invisible");
-			l_dn.setAttribute("class", l_dn.getAttribute("class") + " invisible");
-	}
-	l.appendChild(document.createTextNode(str));
-	l.appendChild(edt);
-	l.appendChild(rmv);
-	if (likey) {
-		l.appendChild(l_up);
-	  l.appendChild(l_dn);
-	}
-	l.setAttribute("class", likey ? "regexp-likey" : "regexp-no-likey");
-	document.getElementById(likey ? "list-likey" : "list").appendChild(l);
+	var daClass = '#' + (likey ? "list-likey" : "list");
+
+	$(daClass).append("<li class='" + (likey ? "regexp-likey": "regexp-no-likey") + "'>" +
+											str +
+											"<button class='" + (likey ? "edt-likey" : "edt-no-likey") + "'>Edit</button>" +
+											"<button class='" + (likey ? "rmv-likey" : "rmv-no-likey") + "'>Remove</button>" +
+											(likey ? "<button class='up up-down'>&#x25B2;</button><button class='down up-down'>&#x25BC;</button>" : "") +
+										"</li>");
 }
 
 function addRegexLikey() {
