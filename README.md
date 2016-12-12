@@ -10,6 +10,7 @@ Here is a list of the current features:
 
 ## In the Works
 * package system \(ideas for default packages welcome\)
+* options page inteface
 
 ## Installation
 1. Clone this repository in your terminal. I assume you know how to clone a GitHub repository by now.
@@ -25,4 +26,7 @@ Here is a list of the current features:
 Click on Options for this plugin in the Extensions panel. \(You should know how to get there by now.\) Choose some keywords of topics that make you cringe or smile with delight. For those keywords that make you cringe, enter them on the left side. For those keywords that make you smile with delight, enter on the right side. Don't forget to save!
 
 ## Pull Requests
-Feel free to contribute if you think you can do it better.
+Feel free to contribute if you think you can do it better. Do contact me by email beforehand, though.
+
+## Contact
+- Email: [sunquan8094@gmail.com](mailto:sunquan8094@gmail.com)
