@@ -60,7 +60,8 @@ p {
 }
 
 input[type="button"], input[type="submit"], button {
-  background-color: yellow;
+  background-color: blue;
+	color: white;
   font-size: 14px;
 	border-radius: 2px;
 	padding: 5px;
@@ -69,6 +70,7 @@ input[type="button"], input[type="submit"], button {
 
 input[type="button"]:hover, input[type="submit"]:hover, button:hover {
   background-color: red;
+	color: white;
 }
 
 input[type="text"] {
