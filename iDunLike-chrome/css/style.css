@@ -12,6 +12,12 @@
 	width: 50%;
 }
 
+#the-footer {
+	float: left;
+	text-align: center;
+	width: 100%;
+}
+
 p {
   font-size: 14px;
 }
@@ -31,8 +37,9 @@ p {
   border-radius: 2px;
   width: auto;
   display: inline-block;
-	padding: 2px;
-  background-color: pink;
+	padding: 2px 5px;
+  background-color: red;
+	color: white;
   font-size: 14px;
 }
 
@@ -42,8 +49,9 @@ p {
   border-radius: 2px;
   max-width: 75%;
   display: block;
-	padding: 2px;
-  background-color: pink;
+	padding: 2px 5px;
+  background-color: #44a044;
+	color: white;
   font-size: 14px;
 }
 
@@ -52,16 +60,20 @@ p {
 }
 
 input[type="button"], input[type="submit"], button {
-  background-color: yellow;
+  background-color: blue;
+	color: white;
   font-size: 14px;
+	border-radius: 2px;
+	padding: 5px;
+	margin: 2px;
 }
 
 input[type="button"]:hover, input[type="submit"]:hover, button:hover {
   background-color: red;
+	color: white;
 }
 
 input[type="text"] {
   font-size: 14px;
 	border-color: black;
-	background-color: tan;
 }
