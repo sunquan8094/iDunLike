@@ -113,7 +113,7 @@ function commonValue(arr1, arr2) {
 
 function getOptions() {
 	chrome.storage.sync.get({"iDunLikeREs": [], "iDunLikeREsLikey": [], "iDunLikePri": false} , function(items) {
-		$('#prioritize').prop('checked', items["iDunLikePri"]);
+    $('#prioritize').prop('checked', items["iDunLikePri"]);
 
 		if (items["iDunLikeREs"].length !== 0) {
 			for (var i = 0; i < items["iDunLikeREs"].length; i++) {
@@ -128,6 +128,9 @@ function getOptions() {
 		if (items["iDunLikePri"]) {
 			$('#list-likey').replaceWith($('<ol id="list-likey">' + $('#list-likey').html() + '</ol>'));
 		}
+    else {
+      $('.up-down').toggleClass('invisible');
+    }
 	});
 }
 
@@ -170,13 +173,11 @@ function addButtonFunctions() {
   for (var d = 0; d < document.querySelectorAll('.rmv-likey').length; d++)
   	document.querySelectorAll('.rmv-likey')[d].addEventListener('click', removeElement);
 
-	for (var d = 0; d < document.querySelectorAll('.up').length; d++) {
+  for (var d = 0; d < document.querySelectorAll('.up').length; d++)
 		document.querySelectorAll('.up')[d].addEventListener('click', upLis);
-	}
 
-	for (var d = 0; d < document.querySelectorAll('.down').length; d++) {
+  for (var d = 0; d < document.querySelectorAll('.down').length; d++)
 		document.querySelectorAll('.down')[d].addEventListener('click', dnLis);
-	}
 }
 
 document.addEventListener("DOMContentLoaded", function() {
